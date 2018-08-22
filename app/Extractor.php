@@ -201,9 +201,9 @@ class Extractor {
             if (in_array($char, [']', ')'])) {
                 $parenCounter--;
             }
-            if($char == '.' && $periodCounter == 0 && $charCounter > 30){
+            if($char == '.' && $parenCounter == 0 && $charCounter > 30){
                 $periodCounter++;
-                if ($periodCounter == self::BRIEF_SENTENCE_COUNT) {
+                if ($periodCounter >= self::BRIEF_SENTENCE_COUNT) {
                     break;
                 }
             }
@@ -211,7 +211,7 @@ class Extractor {
 
         $noDoubleSpaces = preg_replace('/ +/', ' ', $output);
         $noSpaceThenPeriod = preg_replace('/ \./', '.', $noDoubleSpaces);
-        $result = preg_replace('/ \,/', '.', $noSpaceThenPeriod);
+        $result = preg_replace('/ \,/', ',', $noSpaceThenPeriod);
 
         return $result;
     }
