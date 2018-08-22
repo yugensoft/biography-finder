@@ -13,6 +13,7 @@
     <script>
         var countries = @json($countries);
         var fields = @json($fields);
+        const ROOT_URL = '{{ env('APP_URL') }}';
     </script>
 
     @if(Auth::check() and Auth::user()->isSuperAdmin())

@@ -8,7 +8,6 @@ import Bar from './Bar.js';
 import None from './None.js';
 import Person from './Person.js';
 
-const ROOT_URL = '/laravel_apps/biographies/public';
 const SCROLL_END_MARGIN = 20;
 
 export default class Root extends Component {

@@ -59833,7 +59833,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var ROOT_URL = '/laravel_apps/biographies/public';
 var SCROLL_END_MARGIN = 20;
 
 var Root = function (_Component) {
