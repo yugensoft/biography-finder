@@ -29,6 +29,7 @@ export default class Create extends Component {
                 <label htmlFor="create_name">Create New</label><br />
                 <input type="text" name="create_name" id="create_name" value={this.state.create_name}
                        onChange={this.createNameChange.bind(this)}
+                       onKeyPress={this.handleKeyPress.bind(this)}
                 />
                 <a href={this.getUrl()}><button className="btn btn-sm">Create</button></a>
             </div>
