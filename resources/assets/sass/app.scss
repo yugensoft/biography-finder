@@ -1,0 +1,162 @@
+@import "../3rdparty/searchable-option-list/sol.css";
+
+@import '~bootstrap/scss/bootstrap';
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url("https://use.fontawesome.com/releases/v5.1.1/css/all.css");
+
+// Variables
+@import "variables";
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.title {
+  display: flex;
+  justify-content: space-around;
+  background-color: black;
+  padding: 5px;
+
+  div:first-child {
+    align-self: flex-start;
+    margin-right: auto;
+  }
+  div:last-child {
+    align-self: flex-end;
+    padding: 0 30px;
+  }
+
+  h1 {
+    font-size: 2em;
+    margin: 0;
+    font-family: 'Pacifico', cursive;
+    color: white;
+  }
+}
+
+//noinspection CssInvalidFunction
+.people {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.thumb {
+  padding: 25px;
+  border-radius: 5px;
+
+  .image-container {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+  img {
+    height: 100%;
+    margin: auto;
+  }
+  h3 {
+    text-align: center;
+  }
+}
+.thumb:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.main-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 5;
+  background-color: rgba(0,0,0,0.2);
+
+  div {
+    width: 100px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+  }
+}
+
+.bar {
+  background-color: black;
+  color: white;
+  padding: 5px;
+
+  display: grid;
+  //noinspection CssInvalidFunction
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 10px;
+
+  fieldset#born input{
+    width: 5em;
+  }
+
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+
+}
+
+.dark-inputs {
+  input[type="number"], input[type="text"] {
+    background-color: black;
+    color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0 7px;
+  }
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+
+  > div {
+    flex-grow: 1;
+  }
+}
+
+.person {
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  img {
+    float: right;
+    width: 25%;
+  }
+
+  .buttons {
+    text-align: center;
+  }
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.image-loading {
+  width:100%;
+}
+
+.tech-stack {
+  padding: 2px 5px;
+}
+
+.none {
+  font-size: large;
+  font-weight: bold;
+  padding: 40px;
+  grid-column: 1 / -1;
+  text-align: center;
+}

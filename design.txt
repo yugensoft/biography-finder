@@ -1,0 +1,42 @@
+== Use case ==
+The user wants:
+- To find biographies of famous people
+- To filter the famous people by various attributes
+
+== Requirements ==
+Can take input of new famous people
+- And auto-extract fields via wikipedia if possible
+Accepts fields:
+- Name
+- Short bio
+- Image url
+- Achievements [list]
+- book links
+- Wiki link
++ can categorize them by attributes such as
+- Field (business, politics, sports, charity, explorers, science etc)
+- Continent or country
+- Gender
+- Birth date
+Can take user suggestions for new people
+- and can present them to admin
+
+& Accepts an url parameter that causes the tech stack (+ github link etc) for it to show (fixed bar)
+- and a parameter that causes a 'back to yugensoft' link button to show
+
+== Design ==
+Laravel + React + Postgres + Redis
+Gallery-grid style display of all, paginated, face and name
+Filter bar at top
+Click to open full screen in more detail
+- Shows everything, including amazon link
+
+=== DB ===
+1. people
+2. fields
+
+=== View elements ===
+front
+control bar
+thumbnail
+person
