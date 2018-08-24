@@ -13,7 +13,7 @@ class Person extends Model
         'achievements'=>'array',
         'books'=>'array',
     ];
-
+    protected $appends = array('books_textarea');
     protected $guarded = [];
 
     public static function allCountriesCached()
@@ -36,5 +36,17 @@ class Person extends Model
 
     public function fields() {
         return $this->belongsToMany(Field::class, 'people_fields');
+    }
+
+    /**
+     * Render the books as lines of [url], [title]
+     */
+    public function getBooksTextareaAttribute() {
+        return array_reduce(
+            $this->books,
+            function($a,$b){
+                return ($a == null ? '' : "$a\n") . "{$b['url']}, {$b['title']}";
+            }
+        );
     }
 }

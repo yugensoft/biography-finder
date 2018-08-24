@@ -59833,7 +59833,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var SCROLL_END_MARGIN = 20;
+var SCROLL_END_MARGIN = 0;
 
 var Root = function (_Component) {
     _inherits(Root, _Component);
@@ -62226,9 +62226,21 @@ var Create = function (_Component) {
             this.setState({ 'create_name': event.target.value });
         }
     }, {
+        key: 'getUrl',
+        value: function getUrl() {
+            var name = encodeURI(this.state.create_name);
+            return this.props.rootUrl + '/person/create?name=' + name;
+        }
+    }, {
+        key: 'handleKeyPress',
+        value: function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                window.location = this.getUrl();
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var name = encodeURI(this.state.create_name);
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'create dark-inputs' },
@@ -62239,11 +62251,12 @@ var Create = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'create_name', id: 'create_name', value: this.state.create_name,
-                    onChange: this.createNameChange.bind(this)
+                    onChange: this.createNameChange.bind(this),
+                    onKeyPress: this.handleKeyPress.bind(this)
                 }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'a',
-                    { href: this.props.rootUrl + '/person/create?name=' + name },
+                    { href: this.getUrl() },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'button',
                         { className: 'btn btn-sm' },

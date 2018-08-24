@@ -8,7 +8,7 @@ import Bar from './Bar.js';
 import None from './None.js';
 import Person from './Person.js';
 
-const SCROLL_END_MARGIN = 20;
+const SCROLL_END_MARGIN = 0;
 
 export default class Root extends Component {
     constructor(props) {

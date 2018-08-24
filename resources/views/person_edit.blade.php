@@ -51,7 +51,7 @@
 
             <div class="form-group">
                 <label for="books">Book links</label>
-                <textarea class="form-control" name="books" id="books" cols="30" rows="5">{{ old('books', array_reduce($person->books ?? [], function($a,$b){return $a == null ? "{$b['url']}, {$b['title']}" : "$a\n{$b['url']},{$b['title']}";})) }}</textarea>
+                <textarea class="form-control" name="books" id="books" cols="30" rows="5">{{ old('books', $person->booksTextarea) }}</textarea>
                 <small>New book on each line. Format: [url], [title].</small>
             </div>
 
