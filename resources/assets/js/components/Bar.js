@@ -28,11 +28,11 @@ export default class Bar extends Component {
     }
 
     fieldsChange(sol, elements) {
-        this.setState({fields: Bar.solChange(sol, elements)}, this.reload);
+        this.setState({fields: Bar.solChange(sol, elements)}, this.filterChange);
     }
 
     countriesChange(sol, elements) {
-        this.setState({countries: Bar.solChange(sol, elements)}, this.reload);
+        this.setState({countries: Bar.solChange(sol, elements)}, this.filterChange);
     }
 
     componentDidMount() {
@@ -61,12 +61,12 @@ export default class Bar extends Component {
         });
     }
 
-    reload(){
-        this.props.reloadData(this.state);
+    filterChange(){
+        this.props.filterChange(this.state);
     }
 
     genderChange(event) {
-        this.setState({gender: event.target.value}, this.reload);
+        this.setState({gender: event.target.value}, this.filterChange);
     }
     bornBeforeChange(event) {
         this.setState({born_before: event.target.value});
@@ -77,14 +77,14 @@ export default class Bar extends Component {
 
     handleKeyPress(event) {
         if (event.key === 'Enter') {
-            this.reload();
+            this.filterChange();
         }
     }
 
     resetFilter() {
         $('#fields').searchableOptionList().deselectAll();
         $('#countries').searchableOptionList().deselectAll();
-        this.setState(this.baseState, this.reload);
+        this.setState(this.baseState, this.filterChange);
     }
 
     render() {

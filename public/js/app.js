@@ -59845,6 +59845,7 @@ var Root = function (_Component) {
 
         _this.state = {
             people: [],
+            filter: {},
             selected_person: null,
             loading: false
         };
@@ -59868,7 +59869,7 @@ var Root = function (_Component) {
             var scrollEnd = window.innerHeight + window.scrollY;
             var height = document.documentElement.scrollHeight;
             if (scrollEnd >= height - SCROLL_END_MARGIN && !this.state.loading) {
-                this.reloadData(null, this.state.people.length + 1);
+                this.reloadData(this.state.people.length + 1);
             }
         }
     }, {
@@ -59877,22 +59878,27 @@ var Root = function (_Component) {
             var people = this.state.people;
             return people.length && people.length == people[0]['last_page'];
         }
+
+        /**
+         * Request and repopulate or append to filtered person data set from the server
+         * @param page If null, will clear people and reload first page of people; otherwise will append people from page
+         */
+
     }, {
         key: 'reloadData',
         value: function reloadData() {
             var _this2 = this;
 
-            var filter = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-            var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+            var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
             if (page && this.haveAllPages()) {
                 return;
             }
-            var filter_dict = filter === null ? {} : filter;
+            var filter = this.state.filter;
             var page_number = page === null ? 1 : page;
             var should_clear_people = page === null;
 
-            var params = Object.assign({}, filter_dict, { page: page_number });
+            var params = Object.assign({}, filter, { page: page_number });
             var query = '';
             if (Object.keys(params).length) {
                 var esc = encodeURIComponent;
@@ -59913,6 +59919,21 @@ var Root = function (_Component) {
                 });
             });
         }
+
+        /**
+         * Called when Bar filter settings have changed, requiring a data reload
+         * @param filter
+         */
+
+    }, {
+        key: 'filterChange',
+        value: function filterChange(filter) {
+            var _this3 = this;
+
+            this.setState({ filter: filter }, function () {
+                return _this3.reloadData();
+            });
+        }
     }, {
         key: 'thumbClick',
         value: function thumbClick(person) {
@@ -59929,11 +59950,11 @@ var Root = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             var people = this.state.people.map(function (page) {
                 return page.data.map(function (person) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Thumb_js__["a" /* default */], { key: person.id, person: person, rootUrl: ROOT_URL, onClick: _this3.thumbClick.bind(_this3) });
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Thumb_js__["a" /* default */], { key: person.id, person: person, rootUrl: ROOT_URL, onClick: _this4.thumbClick.bind(_this4) });
                 });
             });
             var hasPeople = this.state.people.length && this.state.people[0].data.length;
@@ -59941,7 +59962,7 @@ var Root = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'root' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Bar_js__["a" /* default */], { reloadData: this.reloadData.bind(this), countries: countries, fields: fields,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Bar_js__["a" /* default */], { filterChange: this.filterChange.bind(this), countries: countries, fields: fields,
                     rootUrl: ROOT_URL, canEdit: can_edit
                 }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -61968,12 +61989,12 @@ var Bar = function (_Component) {
     _createClass(Bar, [{
         key: 'fieldsChange',
         value: function fieldsChange(sol, elements) {
-            this.setState({ fields: Bar.solChange(sol, elements) }, this.reload);
+            this.setState({ fields: Bar.solChange(sol, elements) }, this.filterChange);
         }
     }, {
         key: 'countriesChange',
         value: function countriesChange(sol, elements) {
-            this.setState({ countries: Bar.solChange(sol, elements) }, this.reload);
+            this.setState({ countries: Bar.solChange(sol, elements) }, this.filterChange);
         }
     }, {
         key: 'componentDidMount',
@@ -62007,14 +62028,14 @@ var Bar = function (_Component) {
             });
         }
     }, {
-        key: 'reload',
-        value: function reload() {
-            this.props.reloadData(this.state);
+        key: 'filterChange',
+        value: function filterChange() {
+            this.props.filterChange(this.state);
         }
     }, {
         key: 'genderChange',
         value: function genderChange(event) {
-            this.setState({ gender: event.target.value }, this.reload);
+            this.setState({ gender: event.target.value }, this.filterChange);
         }
     }, {
         key: 'bornBeforeChange',
@@ -62030,7 +62051,7 @@ var Bar = function (_Component) {
         key: 'handleKeyPress',
         value: function handleKeyPress(event) {
             if (event.key === 'Enter') {
-                this.reload();
+                this.filterChange();
             }
         }
     }, {
@@ -62038,7 +62059,7 @@ var Bar = function (_Component) {
         value: function resetFilter() {
             $('#fields').searchableOptionList().deselectAll();
             $('#countries').searchableOptionList().deselectAll();
-            this.setState(this.baseState, this.reload);
+            this.setState(this.baseState, this.filterChange);
         }
     }, {
         key: 'render',

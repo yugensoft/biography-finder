@@ -15,6 +15,7 @@ export default class Root extends Component {
         super(props);
         this.state = {
             people: [],
+            filter: {},
             selected_person: null,
             loading: false,
         };
@@ -33,7 +34,7 @@ export default class Root extends Component {
         const scrollEnd = window.innerHeight + window.scrollY;
         const height = document.documentElement.scrollHeight;
         if (scrollEnd >= height - SCROLL_END_MARGIN && !this.state.loading){
-            this.reloadData(null, this.state.people.length + 1)
+            this.reloadData(this.state.people.length + 1)
         }
     }
 
@@ -42,15 +43,19 @@ export default class Root extends Component {
         return people.length && people.length == people[0]['last_page'];
     }
 
-    reloadData(filter = null, page = null) {
+    /**
+     * Request and repopulate or append to filtered person data set from the server
+     * @param page If null, will clear people and reload first page of people; otherwise will append people from page
+     */
+    reloadData(page = null) {
         if(page && this.haveAllPages()){
             return;
         }
-        const filter_dict = filter === null ? {} : filter;
+        const filter = this.state.filter;
         const page_number = page === null ? 1 : page;
         const should_clear_people = page === null;
 
-        const params = Object.assign({}, filter_dict, {page: page_number});
+        const params = Object.assign({}, filter, {page: page_number});
         let query = '';
         if(Object.keys(params).length) {
             const esc = encodeURIComponent;
@@ -71,6 +76,14 @@ export default class Root extends Component {
                 this.setState({people: newPeople, loading: false});
             });
         });
+    }
+
+    /**
+     * Called when Bar filter settings have changed, requiring a data reload
+     * @param filter
+     */
+    filterChange(filter) {
+        this.setState({filter:filter}, () => this.reloadData() );
     }
 
     thumbClick(person) {
@@ -95,7 +108,7 @@ export default class Root extends Component {
 
         return (
             <div className="root">
-                <Bar reloadData={this.reloadData.bind(this)} countries={countries} fields={fields}
+                <Bar filterChange={this.filterChange.bind(this)} countries={countries} fields={fields}
                      rootUrl={ROOT_URL} canEdit={can_edit}
                 />
 
