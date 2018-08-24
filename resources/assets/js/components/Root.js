@@ -8,7 +8,7 @@ import Bar from './Bar.js';
 import None from './None.js';
 import Person from './Person.js';
 
-const SCROLL_END_MARGIN = 0;
+const SCROLL_END_MARGIN = 5;
 
 export default class Root extends Component {
     constructor(props) {
@@ -33,8 +33,9 @@ export default class Root extends Component {
     handleScroll(event) {
         const scrollEnd = window.innerHeight + window.scrollY;
         const height = document.documentElement.scrollHeight;
+
         if (scrollEnd >= height - SCROLL_END_MARGIN && !this.state.loading){
-            this.reloadData(this.state.people.length + 1)
+            this.reloadData(this.state.people.length + 1);
         }
     }
 
@@ -55,6 +56,7 @@ export default class Root extends Component {
         const page_number = page === null ? 1 : page;
         const should_clear_people = page === null;
 
+        // Build http query string
         const params = Object.assign({}, filter, {page: page_number});
         let query = '';
         if(Object.keys(params).length) {
@@ -63,6 +65,8 @@ export default class Root extends Component {
                 .map(k => esc(k) + '=' + esc(params[k]))
                 .join('&');
         }
+
+        // Get and save people
         this.setState({loading:true}, () => {
             axios.get(`${ROOT_URL}/api/person${query}`)
             .then((people) => {

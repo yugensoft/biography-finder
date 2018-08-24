@@ -59833,7 +59833,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var SCROLL_END_MARGIN = 0;
+var SCROLL_END_MARGIN = 5;
 
 var Root = function (_Component) {
     _inherits(Root, _Component);
@@ -59868,6 +59868,7 @@ var Root = function (_Component) {
         value: function handleScroll(event) {
             var scrollEnd = window.innerHeight + window.scrollY;
             var height = document.documentElement.scrollHeight;
+
             if (scrollEnd >= height - SCROLL_END_MARGIN && !this.state.loading) {
                 this.reloadData(this.state.people.length + 1);
             }
@@ -59898,6 +59899,7 @@ var Root = function (_Component) {
             var page_number = page === null ? 1 : page;
             var should_clear_people = page === null;
 
+            // Build http query string
             var params = Object.assign({}, filter, { page: page_number });
             var query = '';
             if (Object.keys(params).length) {
@@ -59906,6 +59908,8 @@ var Root = function (_Component) {
                     return esc(k) + '=' + esc(params[k]);
                 }).join('&');
             }
+
+            // Get and save people
             this.setState({ loading: true }, function () {
                 axios.get(ROOT_URL + '/api/person' + query).then(function (people) {
                     var newPeople = void 0;
