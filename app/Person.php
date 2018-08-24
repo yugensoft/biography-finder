@@ -45,7 +45,7 @@ class Person extends Model
         return array_reduce(
             $this->books,
             function($a,$b){
-                return ($a == null ? '' : "$a\n") . "{$b['url']}, {$b['title']}";
+                return ($a == null ? '' : "$a\n") . $b['url'] ?? '' . ", " . $b['title'] ?? '';
             }
         );
     }
