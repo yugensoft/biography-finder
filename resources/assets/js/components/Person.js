@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 
+/**
+ * Overlay containing person details
+ * @param person Person data
+ * @param onClose Function to run on overlay close
+ * @param rootUrl URL of the app
+ * @param canEdit User can edit this person (is an admin)
+ * @returns {XML}
+ * @constructor
+ */
 const Person = ({person, onClose, rootUrl, canEdit}) => {
     return (
         <div className="person">

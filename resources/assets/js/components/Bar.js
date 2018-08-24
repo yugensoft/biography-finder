@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Create from './Create.js';
 import Title from './Title.js';
 
-
+/**
+ * Filter control bar and header panel for the app
+ */
 export default class Bar extends Component {
     constructor(props){
         super(props);

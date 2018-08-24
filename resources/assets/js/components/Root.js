@@ -8,8 +8,15 @@ import Bar from './Bar.js';
 import None from './None.js';
 import Person from './Person.js';
 
+/**
+ * How close the scroll must be to the end before triggering loading next page of people
+ * @type {number}
+ */
 const SCROLL_END_MARGIN = 5;
 
+/**
+ * Root component for the Biography Finder one-page app
+ */
 export default class Root extends Component {
     constructor(props) {
         super(props);

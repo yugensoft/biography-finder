@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ImageLoading from './ImageLoading';
 
+/**
+ * Thumbnail of a person for displaying in a grid
+ */
 export default class Thumb extends Component{
     constructor(props) {
         super(props);

@@ -1,3 +1,4 @@
+{{-- Front page for the app --}}
 @extends('base')
 
 @section('title', 'Biography Finder')

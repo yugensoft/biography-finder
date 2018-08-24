@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 
+/**
+ * Top title bar and filter reset button
+ * @param reset
+ * @returns {XML}
+ * @constructor
+ */
 const Title = ({reset}) => {
     return (
         <div className="title">
@@ -8,5 +14,4 @@ const Title = ({reset}) => {
         </div>
     );
 };
-
 export default Title;

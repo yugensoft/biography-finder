@@ -1,3 +1,4 @@
+{{-- Form for editing or creating new people --}}
 @extends('base')
 
 @section('title', 'Add/Edit Person')

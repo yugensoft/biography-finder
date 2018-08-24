@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+/**
+ * Field & button for creating new people
+ */
 export default class Create extends Component {
     constructor(props) {
         super(props);
